@@ -8,7 +8,7 @@ namespace LeetCodeCS
 {
     internal class Problem_84
     {
-        static int FindLargestRect(int[] heightArr)
+        static public int FindLargestRect(int[] heightArr)
         {
             Stack<int> heightIndex = new Stack<int>();  // 높이의 인덱스를 저장하는 스택
             int[] leftBounds = new int[heightArr.Length];   // 그 높이의 왼쪽 경계를 저장
@@ -48,10 +48,5 @@ namespace LeetCodeCS
             return maxRect;
         }
 
-        static void Main(string[] args)
-        {
-            int[] heights = new int[] { 2, 1, 5, 6, 2, 3 };
-            Console.WriteLine(FindLargestRect(heights));
-        }
     }
 }
