@@ -10,24 +10,31 @@ namespace LeetCodeCS
     {
         static public int[][] FloodFill(int[][] image, int sr, int sc, int color)
         {
-            int temp = image[sr][sc];   /// 기존의 값 저장
-            image[sr][sc] = color;      // 새로운 값 갱신
+            int temp = image[sr][sc];
+            if (temp == color)
+            {
+                return image;   // 기존과 같으면 바로 리턴
+            }
+            int row = image.Length;
+            int col = image[0].Length;
 
-            if (sr - 1 >= 0 && (image[sr - 1][sc] == temp)) // 왼쪽 
+            Stack<(int, int)> stack = new Stack<(int, int)>();
+            stack.Push((sr, sc));
+
+            while (stack.Count > 0)
             {
-                FloodFill(image, sr - 1, sc, color); /// 왼
-            }
-            if (sr + 1 < image.Length && (image[sr + 1][sc] == temp))
-            {
-                FloodFill(image, sr + 1, sc, color); /// 오른
-            }
-            if (sc - 1 >= 0 && (image[sr][sc - 1] == temp))
-            {
-                FloodFill(image, sr, sc - 1, color); /// 위
-            }
-            if (sc + 1 < image[sc].Length && (image[sr][sc + 1] == temp))
-            {
-                FloodFill(image, sr, sc + 1, color); /// 아래
+                (int r, int c) = stack.Pop();
+                // 유효한 범위 내에서 같은 색상인지 확인 후 변경
+                if (r < 0 || r >= row || c < 0 || c >= col || image[r][c] != temp)
+                {
+                    continue;
+                }
+                image[r][c] = color;
+                //
+                stack.Push((r - 1, c)); /// 왼
+                stack.Push((r + 1, c)); /// 오른
+                stack.Push((r, c - 1)); /// 위
+                stack.Push((r, c + 1)); /// 아래
             }
             return image;
         }
